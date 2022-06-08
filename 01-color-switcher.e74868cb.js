@@ -1,2 +1,0 @@
-var refs={body:document.querySelector("body"),startBtn:document.querySelector("button[data-start]"),stopBtn:document.querySelector("button[data-stop]")};function getRandomHexColor(){return"#".concat(Math.floor(16777215*Math.random()).toString(16))}var changes=null;refs.startBtn.addEventListener("click",(function(){var t=setInterval((function(){refs.body.style.backgroundColor=getRandomHexColor()}),1e3);refs.stopBtn.addEventListener("click",(function(){clearInterval(t)}))}));
-//# sourceMappingURL=01-color-switcher.e74868cb.js.map
