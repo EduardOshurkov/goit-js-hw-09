@@ -1,26 +1,6 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-
-
-const fp = flatpickr("#datetime-picker", {
-    enableTime: true,
-    dateFormat: "F j, H:i",
-  time_24hr: true,
-  defaultDate: new Date(),
-  minuteIncrement: 1,
-    onClose(selectedDates) {
-        if (selectedDates[0] <= fp.defaultDate) {
-            refs.startBtn.disabled = true;
-            alert('Please');
-            return;
-        }
-        refs.startBtn.disabled = false;
-    console.log(selectedDates[0]);
-  }
-});
-
-console.log(fp);
-// _____________________________ Timer
+import Notiflix from 'notiflix';
 
 
 const refs = {
@@ -32,6 +12,29 @@ const refs = {
     
 };
 
+refs.startBtn.disabled = true;
+
+const fp = flatpickr("#datetime-picker", {
+    enableTime: true,
+    dateFormat: "F j, H:i",
+    time_24hr: true,
+    defaultDate: new Date(),
+     minuteIncrement: 1,
+    onClose(selectedDates) {
+        if (selectedDates[0] <= Date.now()) {
+            Notiflix.Notify.failure('Please choose a date in the future');
+        } else {
+            refs.startBtn.disabled = false;
+            Notiflix.Notify.success("okay let's go!");
+        }
+    console.log(selectedDates[0]);
+  }
+});
+
+console.log(fp);
+// _____________________________ Timer
+
+
 class Timer {
     constructor({onTick}) {
         this.intervalId = null;
@@ -42,7 +45,7 @@ class Timer {
     start() {
         if (this.isActive) {
             return;
-        }
+        };
 
         const startTime = Date.now();
         const calendarDate = fp.selectedDates[0].getTime();
